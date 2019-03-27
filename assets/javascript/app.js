@@ -3,6 +3,7 @@ $(document).on('ready', function() {
     //ON START BUTTON CLICK    
     $('#startButton').on('click', function() {
         $('#startButton').hide();
+        $('.title').hide();
 
     console.log("This bitch is ready!");
     //$("#status").text("This bitch is ready!");
@@ -24,13 +25,17 @@ $(document).on('ready', function() {
 
 
 
-
+    
     //DISPLAY QUESTION
     //get question
     function getQuestion(item,index) {
         var question = [item.question];
         return question;
     };
+
+    var firstQuestion =getQuestion(question, 0);
+
+    console.log(firstQuestion);
     //DISPLAY BUTTONS
     function renderButtons() {
         $("#buttons-view").empty();
@@ -40,7 +45,7 @@ $(document).on('ready', function() {
             var btn = $("<button>");
             btn.addClass("answer");
             btn.attr("data-name", questions[i]);
-            btn.text(questions[i]);
+            btn.text( );
 
             //append button
             $("#buttons-view").append(btn);
