@@ -1,5 +1,16 @@
 $(document).on('ready', function() {
 
+
+
+    //display waiting clock 
+    var clockStart = new FlipClock($('.countdown'), 20, {
+        clockFace: 'MinuteCounter',
+        language: 'en',
+        autoStart: false,
+        countdown: true,
+        showSeconds: true
+    });
+
     //ON START BUTTON CLICK    
     $('#startButton').on('click', function() {
         $('#startButton').hide();
@@ -19,12 +30,6 @@ $(document).on('ready', function() {
 
 
     var wrongAnswers = [{  wrong: "Beer", wrong2: "Mai Thai", wrong3: "Water"}];
-
-    
-    //function startGame() {
-
-
-
     
     //DISPLAY QUESTION
     //get question
@@ -67,6 +72,7 @@ $(document).on('ready', function() {
         var countdown;
         var init_countdown;
         var set_countdown;
+        var set_state = true;
       
         countdown = init_countdown = function () {
           countdown = new FlipClock($('.countdown'), {
@@ -80,12 +86,14 @@ $(document).on('ready', function() {
                 return console.log('The clock has started!');
               },
               stop: function () {
-                  $('.title').hide();
-                  $('#test').text('YOU RAN OUT OF TIME!');
+                $('.title').toggle();
+                $('.title').replaceWith("<h1>You ran out of time!</h1>");
                   $('#question').hide();
                   $('#right').hide();
                   $('#wrong').hide();
                   $('.countdown').css('padding-top','130px');
+                  set_state = false;
+                  console.log(set_state);
                   
 
                 return console.log('The clock has stopped!');
@@ -103,7 +111,11 @@ $(document).on('ready', function() {
         };
       
         set_countdown = function (minutes, start) {
-          var elapsed, end, left_secs, now, seconds;
+          var elapsed;
+          var end;
+          var left_secs;
+          var now;
+          var seconds;
           if (countdown.running) {
             return;
           }
@@ -129,6 +141,8 @@ $(document).on('ready', function() {
 
       //END OF FLIPCLOCK FUNCTION
 
+
+      
 
       
     //CORRECT ANSWER CLICKED CHECK

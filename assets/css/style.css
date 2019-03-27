@@ -7,11 +7,15 @@ body {
     background-color: cornflowerblue;
 }
 
-.startButton {
-    margin: 2em;
+#startButton {
+    margin: auto;
     display: flex;
     align-content: center;
     justify-content: center;
+    max-width: 300px;
+    background-color: cornflowerblue;
+
+
 }
 
 .title {
@@ -28,15 +32,25 @@ body {
     justify-content: center;
 } 
 
-.bttons-view {
-    margin: 2em;
+#buttons-view {
+    margin: auto;
     display: flex;
     align-content: center;
+    justify-content: center;
+    max-width: 300px;
     justify-content: center;
 }
 
 #test {
     margin: 2em;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+}
+
+h1 {
+    margin: 1em;
     display: flex;
     align-content: center;
     justify-content: center;
