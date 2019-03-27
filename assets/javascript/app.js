@@ -21,16 +21,47 @@ $(document).on('ready', function() {
 
     // -- --ARRAY-- OF QUESTIONS
     //MATCHING ANSWERS
-    var questions =
-    [{question : "What is the preferred cocktail of: The Dude - The Big Lebowski", answer: "White Russian"},
-    {question : "What is the preferred cocktail of: James Bond", answer: "Vesper"},
-    {question : "What is the preferred cocktail of: Don Draper - Madmen", answer: "Old Fashioned"},
-    {question : "What is the preferred cocktail of: The Blues Brothers", answer: "Orange Whip"},
-    {question : "What is the preferred cocktail of: The Most interesting Man in the World", answer: "XX"}];
+    var questions =[
+    {
+      question : "What is the preferred cocktail of: The Dude - The Big Lebowski",
+      answers: ["White Russian", "Slippery Nipple", "Harvey Wallbanger", "Mai Thai"],
+      correct: 1,
+    },
+
+    {
+      question : "What is the preferred cocktail of: James Bond",
+      answer: ["Martini - shaken not stirred","Gin Fizz","Whiskey Ginger", "Vesper"],
+      correct: 3,
+    },
+
+    {
+      question : "What is the preferred cocktail of: Don Draper - Madmen",
+      answer: ["Manhattan","Old Fashioned","Dark and Stormy","Whiskey on the Rocks"],
+      correct:1,
+    },
+
+    {
+      question : "What is the preferred cocktail of: The Blues Brothers",
+      answer: ["Long Island Iced Tea","Orange Whip","Beer","Blues Margarita"],
+      correct: 1,
+    },
+
+    {
+      question : "What is the preferred cocktail of: The Most interesting Man in the World",
+      answer: ["XX", "Bud Light", "Coors Light", "Guinness"],
+      correct:1
+    }];
 
 
+      console.log(typeof(questions));
     var wrongAnswers = [{  wrong: "Beer", wrong2: "Mai Thai", wrong3: "Water"}];
     
+
+    var set_state = true;
+
+    console.log(questions[answer]);
+
+
     //DISPLAY QUESTION
     //get question
     function getQuestion(item,index) {
@@ -72,7 +103,7 @@ $(document).on('ready', function() {
         var countdown;
         var init_countdown;
         var set_countdown;
-        var set_state = true;
+        
       
         countdown = init_countdown = function () {
           countdown = new FlipClock($('.countdown'), {
@@ -93,7 +124,6 @@ $(document).on('ready', function() {
                   $('#wrong').hide();
                   $('.countdown').css('padding-top','130px');
                   set_state = false;
-                  console.log(set_state);
                   
 
                 return console.log('The clock has stopped!');
@@ -109,6 +139,7 @@ $(document).on('ready', function() {
       
           return countdown;
         };
+
       
         set_countdown = function (minutes, start) {
           var elapsed;
@@ -141,8 +172,6 @@ $(document).on('ready', function() {
 
       //END OF FLIPCLOCK FUNCTION
 
-
-      
 
       
     //CORRECT ANSWER CLICKED CHECK
@@ -230,7 +259,7 @@ $(document).on('ready', function() {
     putOnPage();
 
     //}; //end of startgamefuntion
-
+        
 
         //ON START BUTTON CLICK
     //$('#startButton').on('click', startGame());
