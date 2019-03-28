@@ -59,7 +59,7 @@ $(document).on('ready', function() {
 
     var set_state = true;
 
-    console.log(questions[answer]);
+    //console.log(questions[answer]);
 
 
     //DISPLAY QUESTION
@@ -150,7 +150,7 @@ $(document).on('ready', function() {
           if (countdown.running) {
             return;
           }
-          seconds = minutes * 5;
+          seconds = minutes * 15;
           now = new Date();
           start = new Date(start);
           end = start.getTime() + seconds * 1000;
