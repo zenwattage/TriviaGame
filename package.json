@@ -1,25 +1,19 @@
 {
-  "name": "flipclock",
-  "version": "0.7.8",
-  "email": "support@objectivehtml.com",
-  "author": "Objective HTML, LLC <support@objectivehtml.com>",
-  "license": "MIT",
-  "main": "compiled/flipclock.js",
-  "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-watch": "^0.6.1"
+  "name": "triviagame",
+  "version": "1.0.0",
+  "description": "Trivia Game made using vanilla JS and jQuery",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/objectivehtml/FlipClock"
+    "url": "git+https://github.com/zenwattage/TriviaGame.git"
   },
+  "author": "",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nodejitsu/browsenpm.org/issues"
+    "url": "https://github.com/zenwattage/TriviaGame/issues"
   },
-  "dependencies": {
-    "jquery": ">=1.7"
-  }
+  "homepage": "https://github.com/zenwattage/TriviaGame#readme"
 }

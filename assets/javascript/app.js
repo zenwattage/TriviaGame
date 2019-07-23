@@ -1,269 +1,161 @@
-$(document).on('ready', function() {
 
 
+$(document).ready(function () {
 
-    //display waiting clock 
-    var clockStart = new FlipClock($('.countdown'), 20, {
-        clockFace: 'MinuteCounter',
-        language: 'en',
-        autoStart: false,
-        countdown: true,
-        showSeconds: true
-    });
+  var log = console.log;
+  var correctAnswers = 0;
+  var incorrectAnswers = 0;
+  var unansweredQuestions = 0;
+  var timeRemaining = 20;
+  var intervalID;
+  var indexQandA = 0;
+  var answered = false;
+  var correct;
 
-    //ON START BUTTON CLICK    
-    $('#startButton').on('click', function() {
-        $('#startButton').hide();
-        $('.title').hide();
-
-    console.log("This bitch is ready!");
-    //$("#status").text("This bitch is ready!");
-
-    // -- --ARRAY-- OF QUESTIONS
-    //MATCHING ANSWERS
-    var questions =[
+  // -- --ARRAY-- OF QUESTIONS
+  //MATCHING ANSWERS
+  var triviaGame = [
     {
-      question : "What is the preferred cocktail of: The Dude - The Big Lebowski",
-      answers: ["White Russian", "Slippery Nipple", "Harvey Wallbanger", "Mai Thai"],
-      correct: 1,
+      question: "What is the preferred cocktail of: The Dude - The Big Lebowski",
+      answer: ["White Russian", "Slippery Nipple", "Harvey Wallbanger", "Mai Thai"],
+      correct: "0",
+      image: ("https://images.spot.im/v1/production/bo8gmwii60nveigkaqv5")
     },
 
     {
-      question : "What is the preferred cocktail of: James Bond",
-      answer: ["Martini - shaken not stirred","Gin Fizz","Whiskey Ginger", "Vesper"],
-      correct: 3,
+      question: "What is the preferred cocktail of: James Bond",
+      answer: ["Martini - shaken not stirred", "Gin Fizz", "Whiskey Ginger", "Vesper"],
+      correct: "3",
+      image: ("http://www.inliterature.net/wp-content/uploads/2015/09/James-Bond.jpg")
     },
 
     {
-      question : "What is the preferred cocktail of: Don Draper - Madmen",
-      answer: ["Manhattan","Old Fashioned","Dark and Stormy","Whiskey on the Rocks"],
-      correct:1,
+      question: "What is the preferred cocktail of: Don Draper - Madmen",
+      answer: ["Manhattan", "Old Fashioned", "Dark and Stormy", "Whiskey on the Rocks"],
+      correct: "1",
+      image: ("http://thenutfreevegan.net/wp-content/uploads/2017/11/Delicious-Maple-Old-Fashioned-Cocktail-Vegan-Nutfreevegan-Bourbon-recipe-3.jpg")
     },
 
     {
-      question : "What is the preferred cocktail of: The Blues Brothers",
-      answer: ["Long Island Iced Tea","Orange Whip","Beer","Blues Margarita"],
-      correct: 1,
+      question: "What is the preferred cocktail of: The Blues Brothers",
+      answer: ["Long Island Iced Tea", "Orange Whip", "Beer", "Blues Margarita"],
+      correct: "1",
+      image: ("https://hips.hearstapps.com/vidthumb/images/delish-orange-whip-new-1530555799.jpg")
     },
 
     {
-      question : "What is the preferred cocktail of: The Most interesting Man in the World",
+      question: "What is the preferred cocktail of: The Most interesting Man in the World",
       answer: ["XX", "Bud Light", "Coors Light", "Guinness"],
-      correct:1
+      correct: "0",
+      image: ("https://rogersnider.files.wordpress.com/2013/06/final_ooh-3.jpg")
     }];
 
 
-      console.log(typeof(questions));
-    var wrongAnswers = [{  wrong: "Beer", wrong2: "Mai Thai", wrong3: "Water"}];
-    
+  function startGame() {
+    console.log("game has begun");
+    $('.start-button').remove();
+    correctAnswers = 0;
+    incorrectAnswers = 0;
+    unansweredQuestions = 0;
+    loadQandA();
+  }
 
-    var set_state = true;
-
-    //console.log(questions[answer]);
-
-
-    //DISPLAY QUESTION
-    //get question
-    function getQuestion(item,index) {
-        var question = [item.question];
-        return question;
-    };
-
-    var firstQuestion =getQuestion(question, 0);
-
-    console.log(firstQuestion);
-    //DISPLAY BUTTONS
-    function renderButtons() {
-        $("#buttons-view").empty();
-
-        //loop through array of questions
-        for(var i = 0; i < questions.length; i++){
-            var btn = $("<button>");
-            btn.addClass("answer");
-            btn.attr("data-name", questions[i]);
-            btn.text( );
-
-            //append button
-            $("#buttons-view").append(btn);
-        }
+  function loadQandA() {
+    answered = false; // will allow timeRemaining to be pushed back to <h5> after round reset....else statement in function timer()
+    timeRemaining = 16;
+    intervalID = setInterval(timer, 1000);
+    if (answered === false) {
+      timer();
+    }
+    correct = triviaGame[indexQandA].correct;
+    var question = triviaGame[indexQandA].question;
+    $('.question').html(question);
+    for (var i = 0; i < triviaGame.length -1; i++) {
+      var answer = triviaGame[indexQandA].answer[i];
+      $('.answers').append('<h4 class= answersAll id=' + i + '>' + answer + '</h4>');
     }
 
-    renderButtons();
+    $("h4").click(function () {
+      var id = $(this).attr('id');
+      if (id === correct) {
+        answered = true; // stops the timer
+        $('.question').text("Answer is : " + triviaGame[indexQandA].answer[correct]);
+        correctAnswer();
+      } else {
+        answered = true; //stops the timer
+        $('.question').text("Sorry, the correct answer is : " + triviaGame[indexQandA].answer[correct]);
+        incorrectAnswer();
+      }
+    });
+  }
 
-    //30second timer
-    //setInterval(function(){ alert("Hello"); }, 30000);
-
-    function alertForTesting() {
-                alert('yep working');
-            };
-
-        
-    //COUNTDOWN CLOCK USING FLIPCLOCK JS
-    (function () {
-        var countdown;
-        var init_countdown;
-        var set_countdown;
-        
-      
-        countdown = init_countdown = function () {
-          countdown = new FlipClock($('.countdown'), {
-            clockFace: 'MinuteCounter',
-            language: 'en',
-            autoStart: false,
-            countdown: true,
-            showSeconds: true,
-            callbacks: {
-              start: function () {
-                return console.log('The clock has started!');
-              },
-              stop: function () {
-                $('.title').toggle();
-                $('.title').replaceWith("<h1>You ran out of time!</h1>");
-                  $('#question').hide();
-                  $('#right').hide();
-                  $('#wrong').hide();
-                  $('.countdown').css('padding-top','130px');
-                  set_state = false;
-                  
-
-                return console.log('The clock has stopped!');
-              },
-              interval: function () {
-                var time;
-                time = this.factory.getTime().time;
-                if (time) {
-                  return console.log('Clock interval', time);
-                }
-              } } });
-      
-      
-          return countdown;
-        };
-
-      
-        set_countdown = function (minutes, start) {
-          var elapsed;
-          var end;
-          var left_secs;
-          var now;
-          var seconds;
-          if (countdown.running) {
-            return;
-          }
-          seconds = minutes * 15;
-          now = new Date();
-          start = new Date(start);
-          end = start.getTime() + seconds * 1000;
-          left_secs = Math.round((end - now.getTime()) / 1000);
-          elapsed = false;
-          if (left_secs < 0) {
-            left_secs *= -1;
-            elapsed = true;
-          }
-          countdown.setTime(left_secs);
-          return countdown.start();
-        };
-      
-        init_countdown();
-      
-        set_countdown(1, new Date());
-      
-      }).call(this);
-
-      //END OF FLIPCLOCK FUNCTION
-
-
-      
-    //CORRECT ANSWER CLICKED CHECK
-    //get correct
-    function getRight(item,index) {
-        var rightAnswer = [item.answer];
-        return rightAnswer;
+  function timer() {
+    if (timeRemaining === 0) {
+      answered = true;
+      clearInterval(intervalID);
+      $('.question').text("The correct answer is : " + triviaGame[indexQandA].answer[correct]);
+      unAnswered();
+    } else if (answered === true) {
+      clearInterval(intervalID);
+    } else {
+      timeRemaining--;
+      $('.timeRemaining').text('You have ' + timeRemaining + ' seconds to choose.');
     }
+  }
 
+  function correctAnswer() {
+    correctAnswers++;
+    $('.timeRemaining').text("Correct!");
+    resetRound();
+  }
 
-    //WRONG ANSWER CLICKED
-    //get wrong
-    function getWrong(item,index) {
-        var wrongAnswer = [item.wrong, item.wrong2, item.wrong3];
-        return wrongAnswer;
+  function incorrectAnswer() {
+    incorrectAnswers++;
+    $('.timeRemaining');
+    resetRound();
+
+  }
+
+  function unAnswered() {
+    unansweredQuestions++;
+    $('.timeRemaining');
+    resetRound();
+  }
+
+  function resetRound() {
+    $('.answersAll').remove();
+    $('.answers').append('<img class=answerImage object-fit="contain" src="' + triviaGame[indexQandA].image + ' ">'); // adds answer image
+    indexQandA++; // call next question
+    if (indexQandA < triviaGame.length) {
+      setTimeout(function () {
+        //reload questions and remove image from previous question
+        loadQandA();
+        $('.answerImage').remove();
+      }, 2000);
+
+    } else {
+      setTimeout(function () {
+
+        $('.question').remove();
+        $('.timeRemaining').remove();
+        $('.answerImage').remove();
+
+        $('.answers').append('<h4 class= answersAll end>Correct: ' + correctAnswers + '</h4>');
+        $('.answers').append('<h4 class= answersAll end>Wrong: ' + incorrectAnswers + '</h4>');
+        $('.answers').append('<h4 class= answersAll end>Skipped: ' + unansweredQuestions + '</h4>');
+        $('.answers').append('<h4>Game will restart shortly!</h4>');
+        
+        setTimeout(function () {
+          location.reload();
+        }, 7000);
+      }, 5000);
     }
+  };
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-       /*   function cardTimer() {
-        var timeAllowed = setTimeout(alertForTesting(), 3000000);
-        
-    //QUESTION TIMER STARTS COUNTING DOWN
-    //cardTimer();
+  $('.startButton').on("click", function () {
+    $('.startButton');
+    startGame();
 
-    
-
-
-
-
-    */ 
-    //QUESTION TIMER
-    //TIMER STATUS CHECK
-    //
-
-
-    //ON ANSWER CLICK
-    // RETURN CORRECT OR INCORRECT
-
-    //IF CORRECT
-        //DISPLAY MESSAGE "THAT'S CORRECT!"
-        //DISPLAY IMAGE
-
-    //IF INCORRECT
-        //RETURN CORRECT ANSWER
-        //DISPLAY IMAGE
-        // FOR SET DURATION
-
-    //MOVE TO NEXT QUESTION
-
-
-    //IF TIMER REACHES ZERO
-    // DISPLAY OUT OF TIME
-    //DISPLAY CORRECT ANSWER
-    // MOVE ON TO NEXT QUESTION
-
-
-    //WHEN GAME ENDS
-    //TIMER STOPS
-    //DISPLAY CORRECT,INCORRECT, AND SKIPPED COUNTS
-    //DISPLAY RESET BUTTON
-
-    //ON RESET BUTTON CLICK
-    //RESET GAME
-
-
-
-    function putOnPage() {
-
-        document.getElementById("question").innerHTML = questions.map(getQuestion);
-        document.getElementById("right").innerHTML = questions.map(getRight);
-        document.getElementById("wrong").innerHTML = wrongAnswers.map(getWrong);
-        
-        }
-    putOnPage();
-
-    //}; //end of startgamefuntion
-        
-
-        //ON START BUTTON CLICK
-    //$('#startButton').on('click', startGame());
-
-} );
+  });
 
 });
