@@ -124,10 +124,7 @@
       border-color: #98BFA3;
       margin-top: 100px;
     }
-    .glyphicon-off {
-      font-size: 20px;
-      margin-top: 5px;
-    }
+
     .btn-primary {
       background-color: #98BFA3;
       margin-top: 20px;
@@ -170,10 +167,7 @@
       text-align: center;
       font-size: 16px;
     }
-    .glyphicon-off {
-      font-size: 15px;
-      margin-top: 0px;
-    }
+    
     h5/*timer*/
     {
       font-size: 16px;
